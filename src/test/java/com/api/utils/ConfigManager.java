@@ -8,12 +8,10 @@ import java.util.Properties;
 
 public class ConfigManager {
     private static Properties prop = new Properties();
-    private static String path = "config/config.properties";
-    private static String env = "qa";
+    private static String path ;
+    private static String env ;
 
     static {
-        FileReader fileReader = null;
-        File configFile = null;
         env = System.getProperty("env", "qa"); //if nothing passed we will set env=qa
         env = env.toLowerCase().trim();
 
