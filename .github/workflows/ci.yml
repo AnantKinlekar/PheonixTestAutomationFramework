@@ -21,7 +21,6 @@ on:
         options: [testng.xml,smoke.xml,regression.xml]
         default: testng.xml
         required: true
-
 jobs:
   test:
 
