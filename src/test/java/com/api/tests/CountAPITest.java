@@ -1,9 +1,8 @@
 package com.api.tests;
 
 import static com.api.constant.Role.*;
-import static com.api.utils.AuthTokenProvider.*;
 import static com.api.utils.ConfigManager.*;
-import io.restassured.http.ContentType;
+import static com.api.utils.SpecUtil.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import org.testng.annotations.Test;
 
@@ -16,19 +15,11 @@ public class CountAPITest {
     @Test
     public void verifyCountAPIResponse(){
         given()
-                .baseUri(getProperty("BASE_URI"))
-                .and()
-                .header("Authorization", getToken(FD))
-                .and()
-                .accept(ContentType.JSON)
+                .spec(requestSpecWithAuth(FD))
                 .when()
                 .get("dashboard/count")
                 .then()
-                .log().body()
-                .and()
-                .statusCode(200)
-                .and()
-                .time(lessThan(1000L))
+                .spec(responseSpec_OK())
                 .and()
                 .body("message", equalTo("Success"))
                 .and()
@@ -56,7 +47,7 @@ public class CountAPITest {
                 .when()
                 .get("dashboard/count")
                 .then()
-                .statusCode(401);
+                .spec(responseSpec_TEXT(401));
 
     }
 }
