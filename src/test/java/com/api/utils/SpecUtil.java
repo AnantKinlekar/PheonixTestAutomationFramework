@@ -2,7 +2,6 @@ package com.api.utils;
 import static com.api.utils.ConfigManager.*;
 import static com.api.utils.AuthTokenProvider.*;
 import com.api.constant.Role;
-import com.api.pojo.UserCredentials;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;

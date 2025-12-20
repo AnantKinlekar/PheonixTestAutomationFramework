@@ -1,10 +1,11 @@
 package com.api.tests;
 import static io.restassured.RestAssured.*;
 import static com.api.constant.Role.*;
-import com.api.pojo.*;
 import static com.api.utils.SpecUtil.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
+
+import com.api.request.model.*;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
