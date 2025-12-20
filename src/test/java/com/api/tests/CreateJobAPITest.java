@@ -7,6 +7,9 @@ import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CreateJobAPITest {
 
@@ -14,10 +17,10 @@ public class CreateJobAPITest {
     public void createJobAPITTest() {
         Customer customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
         CustomerAddress customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
-        CustomerProduct customerProduct = new CustomerProduct("2025-04-06T18:30:00.000Z", "23685930780289", "23685930780289", "23685930780289", "2025-04-06T18:30:00.000Z", 1, 1);
+        CustomerProduct customerProduct = new CustomerProduct("2025-04-06T18:30:00.000Z", "23682930780289", "23682930780289", "23682930780289", "2025-04-06T18:30:00.000Z", 1, 1);
         Problems problems = new Problems(1, "Battery issue");
-        Problems[] problemsArray = new Problems[1];
-        problemsArray[0] = problems;
+        List<Problems> problemsList = new ArrayList<>();
+        problemsList.add(problems);
 
         CreateJobPayload createJobPayload = new CreateJobPayload(
                 0,
@@ -27,7 +30,7 @@ public class CreateJobAPITest {
                 customer,
                 customerAddress,
                 customerProduct,
-                problemsArray);
+                problemsList);
 
         given()
                 .spec(requestSpecWithAuth(FD, createJobPayload))
