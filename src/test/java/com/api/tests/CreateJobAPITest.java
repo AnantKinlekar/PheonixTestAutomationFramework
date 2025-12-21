@@ -11,6 +11,7 @@ import com.api.request.model.*;
 
 import static com.api.utils.DateTimeUtil.*;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -18,17 +19,23 @@ import java.util.List;
 
 
 public class CreateJobAPITest {
+    private CreateJobPayload createJobPayload;
+    private Customer customer;
+    private CustomerAddress customerAddress;
+    private CustomerProduct customerProduct;
+    private Problems problems;
+    private List<Problems> problemsList;
 
-    @Test
-    public void createJobAPITTest() {
-        Customer customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
-        CustomerAddress customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
-        CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "23882930780281", "23882930780281", "23882930780281", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
-        Problems problems = new Problems(Problem.OVERHEATING.getCode(), "Battery issue");
-        List<Problems> problemsList = new ArrayList<>();
+    @BeforeMethod(description = "Creating Create Job Api request Payload")
+    public void setup() {
+        customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
+        customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
+        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "23842930780281", "23842930780281", "23842930780281", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+        problems = new Problems(Problem.OVERHEATING.getCode(), "Battery issue");
+        problemsList = new ArrayList<>();
         problemsList.add(problems);
 
-        CreateJobPayload createJobPayload = new CreateJobPayload(
+        createJobPayload = new CreateJobPayload(
                 Service_Location.SERVICE_LOCATION_A.getCode(),
                 Platform.FRONT_DESK.getCode(),
                 Warranty_Status.IN_WARRANTY.getCode(),
@@ -37,6 +44,11 @@ public class CreateJobAPITest {
                 customerAddress,
                 customerProduct,
                 problemsList);
+    }
+
+
+    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
+    public void createJobAPITTest() {
 
         given()
                 .spec(requestSpecWithAuth(FD, createJobPayload))

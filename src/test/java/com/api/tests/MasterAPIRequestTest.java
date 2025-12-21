@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.*;
 
 public class MasterAPIRequestTest {
 
-    @Test
+    @Test(description = "Verify if the MasterAPI is showing correct details in response", groups = {"api", "regression", "smoke"})
     public void masterAPIRequestTest(){
         given()
                 .spec(requestSpecWithAuth(FD))
@@ -37,7 +37,7 @@ public class MasterAPIRequestTest {
 
     }
 
-    @Test
+    @Test(description = "Verify if the Master Api is giving correct status code for invalid token", groups = {"api", "negative", "regression", "smoke"})
     public void invalidTokenMasterAPIRequestTest(){
         given()
                 .spec(requestSpec())
