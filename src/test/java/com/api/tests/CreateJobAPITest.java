@@ -1,38 +1,68 @@
 package com.api.tests;
+
 import static io.restassured.RestAssured.*;
 import static com.api.constant.Role.*;
-import com.api.pojo.*;
 import static com.api.utils.SpecUtil.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import static org.hamcrest.Matchers.*;
+
+import com.api.constant.*;
+import com.api.request.model.*;
+
+import static com.api.utils.DateTimeUtil.*;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CreateJobAPITest {
+    private CreateJobPayload createJobPayload;
+    private Customer customer;
+    private CustomerAddress customerAddress;
+    private CustomerProduct customerProduct;
+    private Problems problems;
+    private List<Problems> problemsList;
 
-    @Test
-    public void createJobAPITTest() {
-        Customer customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
-        CustomerAddress customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
-        CustomerProduct customerProduct = new CustomerProduct("2025-04-06T18:30:00.000Z", "15785930780289", "15785930780289", "15785930780289", "2025-04-06T18:30:00.000Z", 1, 1);
-        Problems problems = new Problems(1, "Battery issue");
-        Problems[] problemsArray = new Problems[1];
-        problemsArray[0] = problems;
+    @BeforeMethod(description = "Creating Create Job Api request Payload")
+    public void setup() {
+        customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
+        customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
+        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "23842930780281", "23842930780281", "23842930780281", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+        problems = new Problems(Problem.OVERHEATING.getCode(), "Battery issue");
+        problemsList = new ArrayList<>();
+        problemsList.add(problems);
 
-        CreateJobPayload createJobPayload = new CreateJobPayload(
-                0,
-                2,
-                1,
-                1,
+        createJobPayload = new CreateJobPayload(
+                Service_Location.SERVICE_LOCATION_A.getCode(),
+                Platform.FRONT_DESK.getCode(),
+                Warranty_Status.IN_WARRANTY.getCode(),
+                OEM.GOOGLE.getCode(),
                 customer,
                 customerAddress,
                 customerProduct,
-                problemsArray);
+                problemsList);
+    }
+
+
+    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
+    public void createJobAPITTest() {
 
         given()
                 .spec(requestSpecWithAuth(FD, createJobPayload))
                 .when()
                 .post("/job/create")
                 .then()
-                .spec(responseSpec_OK());
+                .spec(responseSpec_OK())
+                .body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
+                .body("message", equalTo("Job created successfully. "))
+                .body("data.mst_service_location_id", equalTo(1))
+                .body("data.mst_platform_id", equalTo(2))
+                .body("data.mst_warrenty_status_id", equalTo(1))
+                .body("data.mst_oem_id", equalTo(1))
+                .body("data.job_number", startsWith("JOB_"));
 
     }
 }
