@@ -3,7 +3,7 @@ package com.api.tests.datadriven;
 import com.api.request.model.CreateJobPayload;
 import org.testng.annotations.Test;
 
-import static com.api.constant.Role.FD;
+import static com.api.constant.Role.*;
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
 import static io.restassured.RestAssured.given;
