@@ -15,7 +15,7 @@ public class FakerDataGenerator {
     private static final Random RANDOM = new Random();
     private static final int PRODUCT_ID = 1;
     private static final int MST_MODEL_ID = 1;
-    private static final int[] validProblemIds = {1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,20,22,24,26,27,28,29};
+    private static final int[] validProblemIds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 19, 20, 22, 24, 26, 27, 28, 29};
 
 //    private static Customer customer;
 //    private static CustomerAddress customerAddress;
@@ -44,7 +44,7 @@ public class FakerDataGenerator {
 
     public static Iterator<CreateJobPayload> generateFakeCreateJobData(int count) {
         List<CreateJobPayload> createJobPayloadList = new ArrayList<>();
-        for(int i =1; i<=count;i++) {
+        for (int i = 1; i <= count; i++) {
             Customer customer = generateFakeCustomerData();
             CustomerAddress customerAddress = generateFakeCustomerAddressData();
             CustomerProduct customerProduct = generateFakeCustomerProductData();
@@ -94,13 +94,18 @@ public class FakerDataGenerator {
     }
 
     private static List<Problems> generateFakeProblemsList() {
-        //I want to generate a RANDOM number from 1 to 26 for problems
-        int randomIndex = RANDOM.nextInt(validProblemIds.length);
-        String fakeRemark = faker.lorem().sentence(3);
-        Problems problems = new Problems(validProblemIds[randomIndex], fakeRemark);
-
+        int count = RANDOM.nextInt(1, 4); //id can take value between 1-3
+        int randomIndex;
+        String fakeRemark;
+        Problems problems;
         List<Problems> problemsList = new ArrayList<>();
-        problemsList.add(problems);
+        for (int i = 1; i <= count; i++) {
+            //I want to generate a RANDOM number from 1 to 26 for problems
+            randomIndex = RANDOM.nextInt(validProblemIds.length);
+            fakeRemark = faker.lorem().sentence(3);
+            problems = new Problems(validProblemIds[randomIndex], fakeRemark);
+            problemsList.add(problems);
+        }
         return problemsList;
     }
 
