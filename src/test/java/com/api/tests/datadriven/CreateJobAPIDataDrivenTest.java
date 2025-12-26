@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.startsWith;
 
 
 public class CreateJobAPIDataDrivenTest {
-    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "datadriven"}, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "CreateJobAPIDataProvider")
+    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "datadriven", "csv"}, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "CreateJobAPIDataProvider")
     public void createJobAPITTest(CreateJobPayload createJobPayload) {
 
         given()
