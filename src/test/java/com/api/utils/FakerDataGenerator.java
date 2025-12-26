@@ -15,7 +15,7 @@ public class FakerDataGenerator {
     private static final Random RANDOM = new Random();
     private static final int PRODUCT_ID = 1;
     private static final int MST_MODEL_ID = 1;
-
+    private static final int[] validProblemIds = {1,2,3,4,5,6,7,8,9,10,11,12,15,16,17,19,20,22,24,26,27,28,29};
 
 //    private static Customer customer;
 //    private static CustomerAddress customerAddress;
@@ -95,9 +95,9 @@ public class FakerDataGenerator {
 
     private static List<Problems> generateFakeProblemsList() {
         //I want to generate a RANDOM number from 1 to 26 for problems
-        int randomId = RANDOM.nextInt(1, 27);
+        int randomIndex = RANDOM.nextInt(validProblemIds.length);
         String fakeRemark = faker.lorem().sentence(3);
-        Problems problems = new Problems(randomId, fakeRemark);
+        Problems problems = new Problems(validProblemIds[randomIndex], fakeRemark);
 
         List<Problems> problemsList = new ArrayList<>();
         problemsList.add(problems);
