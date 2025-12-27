@@ -1,6 +1,12 @@
-package com.api.tests.datadriven;
+package com.api.tests;
+
 import com.api.request.model.*;
+import com.api.utils.FakerDataGenerator;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.List;
+
 import static com.api.constant.Role.FD;
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
@@ -10,9 +16,25 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 
-public class CreateJobAPIDataDrivenTest {
-    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "datadriven", "csv"}, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "CreateJobAPIDataProvider")
-    public void createJobAPITTest(CreateJobPayload createJobPayload) {
+public class CreateJobAPITestWithFakeData {
+    private CreateJobPayload createJobPayload;
+    private Customer customer;
+    private CustomerAddress customerAddress;
+    private CustomerProduct customerProduct;
+    private Problems problems;
+    private List<Problems> problemsList;
+    private static final String COUNTRY = "India";
+
+
+
+    @BeforeMethod(description = "Creating Create Job Api request Payload")
+    public void setup() {
+        createJobPayload = FakerDataGenerator.generateFakeCreateJobData();
+    }
+
+
+    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
+    public void createJobAPITTest() {
 
         given()
                 .spec(requestSpecWithAuth(FD, createJobPayload))

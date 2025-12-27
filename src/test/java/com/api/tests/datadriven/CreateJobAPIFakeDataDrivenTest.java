@@ -1,7 +1,9 @@
 package com.api.tests.datadriven;
-import com.api.request.model.*;
+
+import com.api.request.model.CreateJobPayload;
 import org.testng.annotations.Test;
-import static com.api.constant.Role.FD;
+
+import static com.api.constant.Role.*;
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
 import static io.restassured.RestAssured.given;
@@ -10,8 +12,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 
-public class CreateJobAPIDataDrivenTest {
-    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "datadriven", "csv"}, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "CreateJobAPIDataProvider")
+public class CreateJobAPIFakeDataDrivenTest {
+    @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "datadriven", "faker"}, dataProviderClass = com.dataproviders.DataProviderUtils.class, dataProvider = "CreateJobAPIFakerDataProvider")
     public void createJobAPITTest(CreateJobPayload createJobPayload) {
 
         given()
