@@ -1,6 +1,7 @@
 package com.api.tests.datadriven;
 
 import com.api.request.model.UserCredentials;
+import com.dataproviders.api.bean.UserBean;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -12,15 +13,14 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 
 public class LoginAPIExcelDataDrivenTest {
-    private UserCredentials userCredentials;
 
     @Test(description = "Verifying if Login API is working for user: Front Desk",
             groups = {"api", "regression", "datadriven"},
             dataProviderClass = com.dataproviders.DataProviderUtils.class,
             dataProvider = "LoginAPIExcelDataProvider")
-    public void loginAPITest(UserCredentials userCredentials) throws IOException {
+    public void loginAPITest(UserBean userBean) throws IOException {
         given()
-                .spec(requestSpec(userCredentials))
+                .spec(requestSpec(userBean))
                 .when()
                 .post("/login")
                 .then()
