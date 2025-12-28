@@ -1,34 +1,29 @@
 package com.api.utils;
-
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import com.poiji.bind.Poiji;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
+import java.util.List;
 
 public class ExcelReaderUtil {
-    public static void main(String[] args) throws IOException {
+
+    private ExcelReaderUtil() {
+
+    }
+
+    public static <T> Iterator<T> loadTestData(String xlsxFile, String sheetName, Class<T> clazz) {
         // Apache POI OOXML library
-        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("testData/PheonixTestData.xlsx");
-        XSSFWorkbook myworkbook = new XSSFWorkbook(is);
-        //focus on sheet
-        XSSFSheet mySheet = myworkbook.getSheet("LoginTestData");
-        XSSFRow myRow;
-        XSSFCell myCell;
-
-        int lastRowIndex = mySheet.getLastRowNum();
-        XSSFRow rowHeader = mySheet.getRow(0);
-        int lastIndexOfCol = rowHeader.getLastCellNum() - 1; //because index based
-
-        for(int rowIndex = 0; rowIndex <= lastIndexOfCol; rowIndex++){
-            for(int colIndex=0; colIndex<=lastIndexOfCol; colIndex++){
-                myRow = mySheet.getRow(rowIndex);
-                myCell = myRow.getCell(colIndex);
-                System.out.print(myCell + " ");
-            }
-            System.out.println();
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(xlsxFile);
+        XSSFWorkbook myworkbook = null;
+        try {
+            myworkbook = new XSSFWorkbook(is);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        XSSFSheet mySheet = myworkbook.getSheet(sheetName);
+        List<T> dataList = Poiji.fromExcel(mySheet, clazz);
+        return dataList.iterator();
     }
 }
