@@ -27,7 +27,6 @@ public class DataBaseManager {
     }
 
     private static void initializePool() {
-
         if (hikariDataSource == null) {
             synchronized (DataBaseManager.class) {
                 if (hikariDataSource == null) {
