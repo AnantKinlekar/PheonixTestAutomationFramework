@@ -6,9 +6,11 @@ import com.api.response.model.CreateJobResponseModel;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
 import com.database.dao.CustomerProductDao;
+import com.database.dao.MapJobProblemDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
+import com.database.model.MapJobProblemModel;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -97,6 +99,13 @@ public class CreateJobAPITestWithDBValidationTest2 {
         Assert.assertEquals(customerAddressFromDb.getStreet_name(), customerAddress.street_name());
         Assert.assertEquals(customerAddressFromDb.getCountry(), customerAddress.country());
         Assert.assertEquals(customerAddressFromDb.getPincode(), customerAddress.pincode());
+
+        System.out.println("-----------------------------------------------------------");
+        //asserting problems
+        int tr_job_head_id = createJobResponseModel.getData().getId();
+        MapJobProblemModel jobDataFromDb = MapJobProblemDao.getProblemDetails(tr_job_head_id);
+        Assert.assertEquals(jobDataFromDb.getMst_problem_id(), createJobPayload.problems().getFirst().id());
+        Assert.assertEquals(jobDataFromDb.getRemark(), createJobPayload.problems().getFirst().remark());
 
         System.out.println("-----------------------------------------------------------");
         //asserting customer_product
