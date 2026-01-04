@@ -4,8 +4,10 @@ import com.api.request.model.*;
 import com.api.utils.FakerDataGenerator;
 import com.database.dao.CustomerAddressDao;
 import com.database.dao.CustomerDao;
+import com.database.dao.JobHeadDao;
 import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
+import com.database.model.JobHeadModel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -69,7 +71,7 @@ public class CreateJobAPITestWithFakeDataTest {
 
         CustomerAddressDBModel customerAddressFromDb = CustomerAddressDao.getCustomerAddress(actualCustomerDataInDB.getTr_customer_address_id());
 
-        Assert.assertEquals(customerAddressFromDb.getFlat_number(), createJobPayload.customer_address().apartment_name());
+        Assert.assertEquals(customerAddressFromDb.getFlat_number(), createJobPayload.customer_address().flat_number());
         Assert.assertEquals(customerAddressFromDb.getApartment_name(), createJobPayload.customer_address().apartment_name());
         Assert.assertEquals(customerAddressFromDb.getArea(), createJobPayload.customer_address().area());
         Assert.assertEquals(customerAddressFromDb.getLandmark(), createJobPayload.customer_address().landmark());
@@ -77,5 +79,14 @@ public class CreateJobAPITestWithFakeDataTest {
         Assert.assertEquals(customerAddressFromDb.getStreet_name(), createJobPayload.customer_address().street_name());
         Assert.assertEquals(customerAddressFromDb.getCountry(), createJobPayload.customer_address().country());
         Assert.assertEquals(customerAddressFromDb.getPincode(), createJobPayload.customer_address().pincode());
+
+        JobHeadModel jobHeadDataFromDB = JobHeadDao.getJobHeadInfo(customerId);
+
+        Assert.assertEquals(jobHeadDataFromDB.getMst_oem_id(), createJobPayload.mst_oem_id());
+        Assert.assertEquals(jobHeadDataFromDB.getMst_service_location_id(), createJobPayload.mst_service_location_id());
+        Assert.assertEquals(jobHeadDataFromDB.getMst_warrenty_status_id(), createJobPayload.mst_warrenty_status_id());
+        Assert.assertEquals(jobHeadDataFromDB.getMst_platform_id(), createJobPayload.mst_platform_id());
+
+
     }
 }
