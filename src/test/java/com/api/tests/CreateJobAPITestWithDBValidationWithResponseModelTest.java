@@ -11,7 +11,6 @@ import com.database.model.CustomerAddressDBModel;
 import com.database.model.CustomerDBModel;
 import com.database.model.CustomerProductDBModel;
 import com.database.model.MapJobProblemModel;
-import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,7 +28,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 
-public class CreateJobAPITestWithDBValidationTest2 {
+public class CreateJobAPITestWithDBValidationWithResponseModelTest {
     private CreateJobPayload createJobPayload;
     private Customer customer;
     private CustomerAddress customerAddress;
