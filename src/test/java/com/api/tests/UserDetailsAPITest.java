@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.*;
 public class UserDetailsAPITest {
 
     @Test(description = "Verify if the User Details API response is showing correctly for FD User", groups = {"api", "smoke", "regression"})
-    public void userDetailsAPITest() throws IOException {
+    public void userDetailsAPITest() {
 
         given()
                 .spec(requestSpecWithAuth(FD))

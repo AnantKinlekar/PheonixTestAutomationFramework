@@ -17,7 +17,7 @@ public class LoginAPITest {
     }
 
     @Test(description = "Verifying if Login API is working for user: Front Desk", groups = {"api", "regression", "smoke"})
-    public void loginAPITest() throws IOException {
+    public void loginAPITest() {
         given()
                 .spec(requestSpec(userCredentials))
                 .when()
