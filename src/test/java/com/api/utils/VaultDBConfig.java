@@ -4,7 +4,6 @@ import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultConfig;
 import com.bettercloud.vault.VaultException;
 import com.bettercloud.vault.response.LogicalResponse;
-
 import java.util.Map;
 
 public class VaultDBConfig {

@@ -2,7 +2,6 @@ package com.api.utils;
 
 import com.api.request.model.*;
 import com.github.javafaker.Faker;
-
 import java.util.*;
 
 public class FakerDataGenerator {

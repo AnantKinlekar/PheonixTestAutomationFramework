@@ -2,7 +2,6 @@ package com.api.utils;
 
 import com.api.request.model.*;
 import com.dataproviders.api.bean.CreateJobBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
