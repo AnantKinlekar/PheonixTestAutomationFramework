@@ -1,17 +1,16 @@
 package com.database;
 
 import com.api.utils.ConfigManager;
+import com.api.utils.EnvUtil;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DataBaseManager {
-    private static final String DB_URL = ConfigManager.getProperty("DB_URL");
-    private static final String DB_USERNAME = ConfigManager.getProperty("DB_USER_NAME");
-    private static final String DB_PASSWORD = ConfigManager.getProperty("DB_PASSWORD");
+    private static final String DB_URL = EnvUtil.getValue("DB_URL");
+    private static final String DB_USERNAME = EnvUtil.getValue("DB_USERNAME");
+    private static final String DB_PASSWORD = EnvUtil.getValue("DB_PASSWORD");
     private static final int MAX_POOL_SIZE = Integer.parseInt(ConfigManager.getProperty("MAXIMUM_POOL_SIZE"));
     private static final int MIN_IDLE = Integer.parseInt(ConfigManager.getProperty("MINIMUM_IDLE"));
     private static final int CONNECTION_TIMEOUT_IN_SEC = Integer.parseInt(ConfigManager.getProperty("CONNECTION_TIMEOUT_IN_SEC"));
