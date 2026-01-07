@@ -1,32 +1,44 @@
 package com.api.utils;
+
 import static com.api.constant.Role.*;
+
 import com.api.constant.Role;
 import com.api.request.model.UserCredentials;
 import io.restassured.http.ContentType;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import static org.hamcrest.Matchers.*;
 
 import static com.api.utils.ConfigManager.*;
 import static io.restassured.RestAssured.*;
 
 public class AuthTokenProvider {
-    //commenting for test
-    private AuthTokenProvider(){
+
+    private static Map<Role, String> tokenCache = new ConcurrentHashMap<>();
+
+
+    private AuthTokenProvider() {
 
     }
+
     public static String getToken(Role role) {
+
+        if (tokenCache.containsKey(role)) {
+            return tokenCache.get(role);
+        }
 
         UserCredentials userCredentials = null;
 
-        if(role == FD){
+        if (role == FD) {
             userCredentials = new UserCredentials("iamfd", "password");
-        }
-        else if(role == SUP){
+        } else if (role == SUP) {
             userCredentials = new UserCredentials("iamsup", "password");
-        }
-        else if(role == ENG){
+        } else if (role == ENG) {
             userCredentials = new UserCredentials("iameng", "password");
-        }
-        else if(role == QC){
+        } else if (role == QC) {
             userCredentials = new UserCredentials("iamqc", "password");
         }
 
@@ -49,6 +61,8 @@ public class AuthTokenProvider {
                 .and()
                 .log().ifValidationFails()
                 .extract().body().jsonPath().getString("data.token");
+
+        tokenCache.put(role, token);
         return token;
     }
 }
