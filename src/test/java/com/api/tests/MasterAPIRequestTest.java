@@ -1,20 +1,26 @@
 package com.api.tests;
+
 import static com.api.utils.SpecUtil.*;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
+import com.api.services.MasterService;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static com.api.constant.Role.*;
 import static io.restassured.RestAssured.*;
 
 
 public class MasterAPIRequestTest {
+    private MasterService masterService;
+
+    @BeforeMethod(description = "Initializing MasterService")
+    public void setup() {
+        masterService = new MasterService();
+    }
 
     @Test(description = "Verify if the MasterAPI is showing correct details in response", groups = {"api", "regression", "smoke"})
-    public void masterAPIRequestTest(){
-        given()
-                .spec(requestSpecWithAuth(FD))
-                .when()
-                .post("master")
+    public void masterAPIRequestTest() {
+        masterService.master(FD)
                 .then()
                 .spec(responseSpec_OK())
                 .body("message", equalTo("Success"))
@@ -38,7 +44,7 @@ public class MasterAPIRequestTest {
     }
 
     @Test(description = "Verify if the Master Api is giving correct status code for invalid token", groups = {"api", "negative", "regression", "smoke"})
-    public void invalidTokenMasterAPIRequestTest(){
+    public void invalidTokenMasterAPIRequestTest() {
         given()
                 .spec(requestSpec())
                 .when()
