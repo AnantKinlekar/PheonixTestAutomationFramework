@@ -1,25 +1,27 @@
 package com.api.tests;
 
-import static com.api.constant.Role.*;
 import static com.api.utils.SpecUtil.*;
 
+import static com.api.constant.Role.*;
+import com.api.services.UserService;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
-
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
-import static io.restassured.RestAssured.*;
 
 public class UserDetailsAPITest {
+    private UserService userService;
+
+    @BeforeMethod(description = "Initializing UserService")
+    public void setup() {
+        userService = new UserService();
+    }
 
     @Test(description = "Verify if the User Details API response is showing correctly for FD User", groups = {"api", "smoke", "regression"})
     public void userDetailsAPITest() {
 
-        given()
-                .spec(requestSpecWithAuth(FD))
-                .when()
-                .get("userdetails")
+
+        userService.userDetails(FD)
                 .then()
                 .spec(responseSpec_OK())
                 .and()

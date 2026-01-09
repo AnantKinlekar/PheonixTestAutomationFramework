@@ -1,16 +1,16 @@
 package com.api.tests;
 
-import static io.restassured.RestAssured.*;
-import static com.api.constant.Role.*;
 import static com.api.utils.SpecUtil.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
 
 import com.api.constant.*;
+import com.api.constant.Problem;
 import com.api.request.model.*;
 
 import static com.api.utils.DateTimeUtil.*;
 
+import com.api.services.JobService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -25,12 +25,15 @@ public class CreateJobAPITest {
     private CustomerProduct customerProduct;
     private Problems problems;
     private List<Problems> problemsList;
+    private JobService jobService;
 
-    @BeforeMethod(description = "Creating Create Job Api request Payload")
+
+    @BeforeMethod(description = "Creating Create Job Api request Payload and initializing job service")
     public void setup() {
+        jobService = new JobService();
         customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
         customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
-        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "23842930780281", "23842930780281", "23842930780281", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "23842930780876", "23842930780876", "23842930780876", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
         problems = new Problems(Problem.OVERHEATING.getCode(), "Battery issue");
         problemsList = new ArrayList<>();
         problemsList.add(problems);
@@ -49,11 +52,7 @@ public class CreateJobAPITest {
 
     @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
     public void createJobAPITTest() {
-
-        given()
-                .spec(requestSpecWithAuth(FD, createJobPayload))
-                .when()
-                .post("/job/create")
+        jobService.createJob(Role.FD, createJobPayload)
                 .then()
                 .spec(responseSpec_OK())
                 .body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))

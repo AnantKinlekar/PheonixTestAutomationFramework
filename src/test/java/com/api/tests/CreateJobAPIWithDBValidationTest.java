@@ -2,6 +2,7 @@ package com.api.tests;
 
 import com.api.constant.*;
 import com.api.request.model.*;
+import com.api.services.JobService;
 import com.database.dao.*;
 import com.database.model.*;
 import io.restassured.response.Response;
@@ -12,33 +13,31 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.api.constant.Role.FD;
 import static com.api.utils.DateTimeUtil.getTimeWithDaysAgo;
-import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static com.api.utils.SpecUtil.responseSpec_OK;
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
 
-public class CreateJobAPITestWithDBValidationTest {
+public class CreateJobAPIWithDBValidationTest {
     private CreateJobPayload createJobPayload;
     private Customer customer;
     private CustomerAddress customerAddress;
     private CustomerProduct customerProduct;
     private Problems problems;
     private List<Problems> problemsList;
+    private JobService jobService;
 
-    @BeforeMethod(description = "Creating Create Job Api request Payload")
+    @BeforeMethod(description = "Creating Create Job Api request Payload and Initializing Create Job Service")
     public void setup() {
         customer = new Customer("Anant", "Kinlekar", "7995924124", "", "anantkinlekar18@gmail.com", "");
         customerAddress = new CustomerAddress("602", "Vasavi Arcade", "Munneshwar Temple Road", "ECC Road", "Paatandur Agrahara", "416410", "India", "Maharashtra");
-        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "29882956907111", "29882956907111", "29882956907111", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+        customerProduct = new CustomerProduct(getTimeWithDaysAgo(1), "29882956907122", "29882956907122", "29882956907122", getTimeWithDaysAgo(1), Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
         problems = new Problems(Problem.OVERHEATING.getCode(), "Battery issue");
         problemsList = new ArrayList<>();
         problemsList.add(problems);
-
+        jobService = new JobService();
         createJobPayload = new CreateJobPayload(
                 Service_Location.SERVICE_LOCATION_A.getCode(),
                 Platform.FRONT_DESK.getCode(),
@@ -54,10 +53,7 @@ public class CreateJobAPITestWithDBValidationTest {
     @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
     public void createJobAPITTest() {
 
-        Response response = given()
-                .spec(requestSpecWithAuth(FD, createJobPayload))
-                .when()
-                .post("/job/create")
+        Response response = jobService.createJob(Role.FD, createJobPayload)
                 .then()
                 .spec(responseSpec_OK())
                 .body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
