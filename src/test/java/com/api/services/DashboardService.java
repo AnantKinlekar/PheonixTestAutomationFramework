@@ -8,6 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class DashboardService {
     private static final String COUNT_ENDPOINT = "dashboard/count";
+    private static final String DETAILS_ENDPOINT = "dashboard/details";
 
     public Response countWithNoAuth(){
         return given().spec(requestSpec())
@@ -21,5 +22,13 @@ public class DashboardService {
                 .spec(requestSpecWithAuth(role))
                 .when()
                 .get(COUNT_ENDPOINT);
+    }
+
+    public Response details(Role role, Object payload){
+        return given()
+                .spec(requestSpecWithAuth(role))
+                .body(payload)
+                .when()
+                .post(DETAILS_ENDPOINT);
     }
 }
