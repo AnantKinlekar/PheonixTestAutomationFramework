@@ -10,17 +10,16 @@ public class DashboardService {
     private static final String COUNT_ENDPOINT = "dashboard/count";
 
     public Response countWithNoAuth(){
-        Response response = given().spec(requestSpec())
+        return given().spec(requestSpec())
                 .when()
                 .get(COUNT_ENDPOINT);
-        return response;
+
     }
 
     public Response count(Role role){
-        Response response = given()
+        return given()
                 .spec(requestSpecWithAuth(role))
                 .when()
                 .get(COUNT_ENDPOINT);
-        return response;
     }
 }

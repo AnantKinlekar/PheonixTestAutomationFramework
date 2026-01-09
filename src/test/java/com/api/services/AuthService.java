@@ -9,10 +9,10 @@ public class AuthService {
     private static final String LOGIN_ENDPOINT = "/login";
 
     public Response login(Object userCredentials) {
-        Response response = given()
+        return given()
                 .spec(requestSpec(userCredentials))
                 .when()
                 .post(LOGIN_ENDPOINT);
-        return response;
+
     }
 }

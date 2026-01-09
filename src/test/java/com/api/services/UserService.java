@@ -9,10 +9,9 @@ public class UserService {
 
     private static final String USER_DETAILS_ENDPOINT = "/userdetails";
     public Response userDetails(Role role) {
-        Response response = given()
+        return given()
                 .spec(requestSpecWithAuth(role))
                 .when()
                 .get(USER_DETAILS_ENDPOINT);
-        return response;
     }
 }
