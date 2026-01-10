@@ -1,11 +1,13 @@
 package com.database.dao;
 import com.database.DataBaseManager;
 import com.database.model.CustomerDBModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class CustomerDao {
-    //executing the query f or tr_customer which will give details of customer
+    private static final Logger LOGGER = LogManager.getLogger(CustomerDao.class);
 
     private CustomerDao() {
     }
@@ -20,6 +22,8 @@ public class CustomerDao {
         ResultSet resultSet;
         CustomerDBModel customerDBModel = null;
         try {
+            LOGGER.info("Executing the SQL Query: {}", CUSTOMER_DETAIL_QUERY);
+
             conn = DataBaseManager.getConnection();
             preparedStatement = conn.prepareStatement(CUSTOMER_DETAIL_QUERY);
             preparedStatement.setInt(1, customerId);
@@ -38,6 +42,7 @@ public class CustomerDao {
             );
             }
         } catch (SQLException e) {
+            LOGGER.error("Cannot convert the result set to the customerDBModel");
             e.printStackTrace();
         }
         return customerDBModel;
