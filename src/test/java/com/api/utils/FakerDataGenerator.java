@@ -2,9 +2,14 @@ package com.api.utils;
 
 import com.api.request.model.*;
 import com.github.javafaker.Faker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.*;
 
 public class FakerDataGenerator {
+    private static final Logger LOGGER = LogManager.getLogger(FakerDataGenerator.class);
+
     private static Faker faker = new Faker(new Locale("en-IND"));
     private static final String COUNTRY = "India";
     private static final int MST_SERVICE_LOCATION_ID = 0;
@@ -15,12 +20,12 @@ public class FakerDataGenerator {
     private static final int PRODUCT_ID = 1;
     private static final int MST_MODEL_ID = 1;
     private static final int[] validProblemIds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 19, 20, 22, 24, 26, 27, 28, 29};
-
     private FakerDataGenerator() {
 
     }
 
     public static CreateJobPayload generateFakeCreateJobData() {
+        LOGGER.info("Generating the fake payload for create job API");
 
         Customer customer = generateFakeCustomerData();
         CustomerAddress customerAddress = generateFakeCustomerAddressData();
