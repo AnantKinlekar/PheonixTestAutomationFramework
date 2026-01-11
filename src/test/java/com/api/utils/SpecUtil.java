@@ -3,6 +3,7 @@ package com.api.utils;
 import static com.api.utils.ConfigManager.*;
 import static com.api.utils.AuthTokenProvider.*;
 import com.api.constant.Role;
+import com.api.filters.SensitiveDataFilter;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -43,6 +44,7 @@ public class SpecUtil {
                 .setAccept(ContentType.JSON)
                 .and()
                 .setBody(payload)
+                .addFilter(new SensitiveDataFilter())
                 .log(LogDetail.METHOD)
                 .log(LogDetail.URI)
                 .log(LogDetail.HEADERS)
