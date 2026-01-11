@@ -2,6 +2,7 @@ package com.api.tests.datadriven;
 
 import com.api.request.model.UserCredentials;
 import com.api.services.AuthService;
+import com.dataproviders.api.bean.UserBean;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class LoginAPIJSONDataDrivenTest {
             groups = {"api", "regression", "datadriven"},
             dataProviderClass = com.dataproviders.DataProviderUtils.class,
             dataProvider = "LoginAPIJsonDataProvider")
-    public void loginAPITest(UserCredentials userCredentials) throws IOException {
+    public void loginAPITest(UserBean userCredentials) throws IOException {
         authService.login(userCredentials)
                 .then()
                 .spec(responseSpec_OK())

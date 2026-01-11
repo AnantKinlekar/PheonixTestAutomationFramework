@@ -2,6 +2,8 @@ package com.database.dao;
 
 import com.database.DataBaseManager;
 import com.database.model.JobHeadModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JobHeadDao {
+    private static final Logger LOGGER = LogManager.getLogger(JobHeadDao.class);
+
     private static final String JOB_HEAD_QUERY =
             """
                     select * from tr_job_head where tr_customer_id = ?
@@ -27,6 +31,8 @@ public class JobHeadDao {
             connection = DataBaseManager.getConnection();
             preparedStatement = connection.prepareStatement(JOB_HEAD_QUERY);
             preparedStatement.setInt(1, customerId);
+            LOGGER.info("Executing the SQL Query: {}", JOB_HEAD_QUERY);
+
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
@@ -41,6 +47,7 @@ public class JobHeadDao {
                         resultSet.getInt("mst_oem_id"));
             }
         } catch (SQLException e) {
+            LOGGER.error("Cannot convert the result set to the JobHeadModel Bean");
             System.err.println(e.getMessage());
         }
         return jobHeadModel;

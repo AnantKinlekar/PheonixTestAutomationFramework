@@ -3,7 +3,11 @@ package com.api.utils;
 import static com.api.constant.Role.*;
 import com.api.constant.Role;
 import com.api.request.model.UserCredentials;
+import com.api.services.UserService;
 import io.restassured.http.ContentType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import static org.hamcrest.Matchers.*;
@@ -13,7 +17,7 @@ import static io.restassured.RestAssured.*;
 public class AuthTokenProvider {
 
     private static Map<Role, String> tokenCache = new ConcurrentHashMap<>();
-
+    private static final Logger LOGGER = LogManager.getLogger(AuthTokenProvider.class);
 
     private AuthTokenProvider() {
 
@@ -21,9 +25,12 @@ public class AuthTokenProvider {
 
     public static String getToken(Role role) {
 
+        LOGGER.info("Checking if the token for {} is present in the cache", role);
         if (tokenCache.containsKey(role)) {
+            LOGGER.info("Token found for Role: {} in the cache", role);
             return tokenCache.get(role);
         }
+        LOGGER.info("Token NOT found for Role: {} in the cache for making login request", role);
 
         UserCredentials userCredentials = null;
 
@@ -56,7 +63,7 @@ public class AuthTokenProvider {
                 .and()
                 .log().ifValidationFails()
                 .extract().body().jsonPath().getString("data.token");
-
+        LOGGER.info("Token cached for the Role: {} for future request", role);
         tokenCache.put(role, token);
         return token;
     }

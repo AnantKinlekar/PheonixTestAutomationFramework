@@ -1,8 +1,9 @@
 package com.database.dao;
 
-import com.api.utils.JsonReaderUtil;
 import com.database.DataBaseManager;
 import com.dataproviders.api.bean.CreateJobBean;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateJobPayloadDataDao {
-    //This will fire SQL Query and interact with DB
+    private static final Logger LOGGER = LogManager.getLogger(CreateJobPayloadDataDao.class);
     private static final String SQL_QUERY = """
             select mst_service_location_id,
                         mst_platform_id,
@@ -59,8 +60,11 @@ public class CreateJobPayloadDataDao {
         List<CreateJobBean> beanList = new ArrayList<>();
 
         try {
+            LOGGER.info("Getting the coonection from the database manager");
             conn = DataBaseManager.getConnection();
             statement = conn.createStatement();
+            LOGGER.info("Executing the SQL Query: {}", SQL_QUERY);
+
             resultSet = statement.executeQuery(SQL_QUERY);
             while (resultSet.next()) {
                 CreateJobBean bean = new CreateJobBean();
@@ -94,6 +98,7 @@ public class CreateJobPayloadDataDao {
                 beanList.add(bean);
             }
         } catch (SQLException e) {
+            LOGGER.error("Can not convert the result set to the bean");
             e.printStackTrace();
         }
         return beanList;

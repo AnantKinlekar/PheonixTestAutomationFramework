@@ -2,6 +2,9 @@ package com.api.services;
 
 import com.api.constant.Role;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static com.api.utils.SpecUtil.requestSpec;
 import static com.api.utils.SpecUtil.requestSpecWithAuth;
 import static io.restassured.RestAssured.given;
@@ -9,8 +12,10 @@ import static io.restassured.RestAssured.given;
 public class DashboardService {
     private static final String COUNT_ENDPOINT = "dashboard/count";
     private static final String DETAILS_ENDPOINT = "dashboard/details";
+    private static final Logger LOGGER = LogManager.getLogger(DashboardService.class);
 
     public Response countWithNoAuth(){
+        LOGGER.info("Making request to the {} without Auth Token", COUNT_ENDPOINT);
         return given().spec(requestSpec())
                 .when()
                 .get(COUNT_ENDPOINT);
@@ -18,6 +23,7 @@ public class DashboardService {
     }
 
     public Response count(Role role){
+        LOGGER.info("Making request to the {} for the role {}", COUNT_ENDPOINT, role);
         return given()
                 .spec(requestSpecWithAuth(role))
                 .when()
@@ -25,6 +31,7 @@ public class DashboardService {
     }
 
     public Response details(Role role, Object payload){
+        LOGGER.info("Making request to the {} with Role {} and payload {}", DETAILS_ENDPOINT, role, payload);
         return given()
                 .spec(requestSpecWithAuth(role))
                 .body(payload)

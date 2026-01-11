@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 public class SearchAPITest {
     private JobService jobService ;
-    private static final String JOB_NUMBER = "JOB_131343";
+    private static final String JOB_NUMBER = "JOB_150960";
     private Search searchPayload;
 
     @BeforeMethod(description = "Initializing Job Service and creating a search payload")

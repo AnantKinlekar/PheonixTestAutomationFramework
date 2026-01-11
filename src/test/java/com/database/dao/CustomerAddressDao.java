@@ -2,6 +2,8 @@ package com.database.dao;
 import com.api.request.model.CustomerAddress;
 import com.database.DataBaseManager;
 import com.database.model.CustomerAddressDBModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomerAddressDao {
+    private static final Logger LOGGER = LogManager.getLogger(CustomerAddressDao.class);
+
     private static final String CUSTOMER_ADDRESS_QUERY = """
             select id,
                     flat_number,
@@ -30,9 +34,12 @@ public class CustomerAddressDao {
         ResultSet resultSet;
         CustomerAddressDBModel customerAddressDBModel = null;
         try {
+            LOGGER.info("Getting the connection from DataBaseManager");
             connection = DataBaseManager.getConnection();
             preparedStatement = connection.prepareStatement(CUSTOMER_ADDRESS_QUERY);
             preparedStatement.setInt(1, customerAddressId);
+            LOGGER.info("Executing the query {}", CUSTOMER_ADDRESS_QUERY);
+
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 customerAddressDBModel = new CustomerAddressDBModel(
@@ -48,6 +55,7 @@ public class CustomerAddressDao {
                 );
             }
         } catch (SQLException e) {
+            LOGGER.error("Cannot convert the result set to the CustomerAddressDBModel bean");
             e.printStackTrace();
         }
         return customerAddressDBModel;

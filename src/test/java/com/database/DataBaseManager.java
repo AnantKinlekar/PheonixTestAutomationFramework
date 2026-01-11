@@ -5,11 +5,15 @@ import com.api.utils.EnvUtil;
 import com.api.utils.VaultDBConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DataBaseManager {
+    private static final Logger LOGGER = LogManager.getLogger(DataBaseManager.class);
+
     private static boolean isVaultUp = true;
     private static final String DB_URL = loadSecret("DB_URL");
     private static final String DB_USERNAME = loadSecret("DB_USERNAME");
@@ -30,7 +34,10 @@ public class DataBaseManager {
     }
 
     private static void initializePool() {
+
         if (hikariDataSource == null) {
+            LOGGER.warn("Database connection is not available....Creating HikariDataSource");
+
             synchronized (DataBaseManager.class) {
                 if (hikariDataSource == null) {
                     HikariConfig hikariConfig = new HikariConfig();
@@ -44,6 +51,8 @@ public class DataBaseManager {
                     hikariConfig.setMaxLifetime(MAX_LIFETIME_IN_MIN * 60 * 1000);
                     hikariConfig.setPoolName(HIKARI_CP_POOL_NAME);
                     hikariDataSource = new HikariDataSource(hikariConfig);
+                    LOGGER.info("HikariDataSource created");
+
                 }
             }
         }
@@ -53,8 +62,10 @@ public class DataBaseManager {
         Connection connection = null;
 
         if (hikariDataSource == null) {
+            LOGGER.info("Initializing the DataBase Connection using HikariCP");
             initializePool();
         } else if (hikariDataSource.isClosed()) {
+            LOGGER.error("Hikari DataSource is closed");
             throw new SQLException("HIKARI DATA SOURCE IS CLOSED");
         }
         connection = hikariDataSource.getConnection();
@@ -66,9 +77,10 @@ public class DataBaseManager {
 
         if (isVaultUp) {
             value = VaultDBConfig.getSecret(key);
-            if (value == null) {// when something is wrong with vault
+            if (value == null) {
+                LOGGER.error("Vault is Down !! Or some issue with Vault. Picking up value from .env file");
                 isVaultUp = false;
-                System.err.println("Vault is Down !! Or some issue with Vault. Picking up value from .env file");
+                LOGGER.info("Reading the value for key: {} from the the env file", value);
                 value = EnvUtil.getValue(key);
             }
         }
