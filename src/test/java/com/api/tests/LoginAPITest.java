@@ -5,9 +5,11 @@ import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.*;
 
+@Listeners(com.listeners.APITestListener.class)
 public class LoginAPITest {
     private UserBean userCredentials;
     private AuthService authService;
