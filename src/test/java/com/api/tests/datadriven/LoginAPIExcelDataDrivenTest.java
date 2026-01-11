@@ -3,12 +3,13 @@ package com.api.tests.datadriven;
 import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.io.IOException;
 import static com.api.utils.SpecUtil.responseSpec_OK;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
-
+@Listeners(com.listeners.APITestListener.class)
 public class LoginAPIExcelDataDrivenTest {
 
     private AuthService authService;

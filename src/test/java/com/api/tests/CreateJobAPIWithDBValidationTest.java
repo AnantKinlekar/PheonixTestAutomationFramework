@@ -8,6 +8,7 @@ import com.database.model.*;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
-
+@Listeners(com.listeners.APITestListener.class)
 public class CreateJobAPIWithDBValidationTest {
     private CreateJobPayload createJobPayload;
     private Customer customer;
