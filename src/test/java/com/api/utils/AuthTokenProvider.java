@@ -3,7 +3,6 @@ package com.api.utils;
 import static com.api.constant.Role.*;
 import com.api.constant.Role;
 import com.api.request.model.UserCredentials;
-import com.api.services.UserService;
 import io.restassured.http.ContentType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

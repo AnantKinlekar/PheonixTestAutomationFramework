@@ -5,10 +5,12 @@ import static com.api.utils.SpecUtil.*;
 import static com.api.constant.Role.*;
 import com.api.services.UserService;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
 
+@Listeners(com.listeners.APITestListener.class)
 public class UserDetailsAPITest {
     private UserService userService;
 

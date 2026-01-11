@@ -5,11 +5,12 @@ import static org.hamcrest.Matchers.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import com.api.services.MasterService;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static com.api.constant.Role.*;
 import static io.restassured.RestAssured.*;
 
-
+@Listeners(com.listeners.APITestListener.class)
 public class MasterAPIRequestTest {
     private MasterService masterService;
 
