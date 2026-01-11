@@ -6,8 +6,9 @@ import com.api.services.JobService;
 import com.api.utils.SpecUtil;
 import org.hamcrest.Matchers;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
+@Listeners(com.listeners.APITestListener.class)
 public class SearchAPITest {
     private JobService jobService ;
     private static final String JOB_NUMBER = "JOB_150960";

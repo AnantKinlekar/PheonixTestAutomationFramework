@@ -33,12 +33,10 @@ public class SensitiveDataFilter implements Filter {
         return response;
     }
 
-    //create a method which will redact the password
     public void redactPayload(FilterableRequestSpecification requestSpec) {
 
         if (requestSpec.getBody() != null) {
             String requestPayload = requestSpec.getBody().toString();
-            //Journey to hide payload starts
             requestPayload = requestPayload.replaceAll("\"password\"\s*:\s*\"[^\"]+\"", "\"password\": \"[REDACTED]\"");
             LOGGER.info("REQUEST PAYLOAD: \n{}", requestPayload);
         }

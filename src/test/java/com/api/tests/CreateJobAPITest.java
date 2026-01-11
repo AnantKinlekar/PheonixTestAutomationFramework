@@ -12,12 +12,13 @@ import static com.api.utils.DateTimeUtil.*;
 
 import com.api.services.JobService;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Listeners(com.listeners.APITestListener.class)
 public class CreateJobAPITest {
     private CreateJobPayload createJobPayload;
     private Customer customer;
