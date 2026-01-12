@@ -2,6 +2,7 @@ package com.api.utils;
 
 import com.api.request.model.*;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,7 @@ public class FakerDataGenerator {
 
     }
 
+    @Step("Generating fake create job data")
     public static CreateJobPayload generateFakeCreateJobData() {
         LOGGER.info("Generating the fake payload for create job API");
 
@@ -40,6 +42,7 @@ public class FakerDataGenerator {
         return createJobPayload;
     }
 
+    @Step("Generating multiple fake create job data with the count")
     public static Iterator<CreateJobPayload> generateFakeCreateJobData(int count) {
         List<CreateJobPayload> createJobPayloadList = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
@@ -58,6 +61,7 @@ public class FakerDataGenerator {
         return createJobPayloadList.iterator();
     }
 
+    @Step("Generating fake Customer data")
     private static Customer generateFakeCustomerData() {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
@@ -69,6 +73,7 @@ public class FakerDataGenerator {
         return customer;
     }
 
+    @Step("Generating fake Customer Address data")
     private static CustomerAddress generateFakeCustomerAddressData() {
         String flat_number = faker.address().buildingNumber();
         String apartmentName = faker.address().streetName();
@@ -82,6 +87,7 @@ public class FakerDataGenerator {
         return customerAddress;
     }
 
+    @Step("Generating fake Customer Product Data")
     private static CustomerProduct generateFakeCustomerProductData() {
         String dop = DateTimeUtil.getTimeWithDaysAgo(10);
         String imeiSerialNumber = faker.numerify("###############");
@@ -91,6 +97,7 @@ public class FakerDataGenerator {
         return customerProduct;
     }
 
+    @Step("Generating fake Problems List data")
     private static List<Problems> generateFakeProblemsList() {
         int count = RANDOM.nextInt(1, 4); //id can take value between 1-3
         int randomIndex;

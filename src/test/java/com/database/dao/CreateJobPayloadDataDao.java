@@ -2,6 +2,7 @@ package com.database.dao;
 
 import com.database.DataBaseManager;
 import com.dataproviders.api.bean.CreateJobBean;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,6 +54,7 @@ public class CreateJobPayloadDataDao {
                         limit 5;
             """;
 
+    @Step("Retrieving the createJob Payload Data from DataBase")
     public static List<CreateJobBean> getCreateJobPayloadData() {
         Connection conn = null;
         Statement statement = null;

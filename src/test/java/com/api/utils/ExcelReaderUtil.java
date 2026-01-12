@@ -1,6 +1,7 @@
 package com.api.utils;
 
 import com.poiji.bind.Poiji;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,6 +19,7 @@ public class ExcelReaderUtil {
 
     }
 
+    @Step("Loading Test Data from Excel File")
     public static <T> Iterator<T> loadTestData(String xlsxFile, String sheetName, Class<T> clazz) {
         LOGGER.info("Reading the test data from the .xlsx file {} and the sheet name is: {}", xlsxFile, sheetName);
 

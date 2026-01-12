@@ -2,6 +2,7 @@ package com.database.dao;
 
 import com.database.DataBaseManager;
 import com.database.model.CustomerProductDBModel;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class CustomerProductDao {
 
     }
 
+    @Step("Retrieving the Customer Product Info from DB for a specific customer Id")
     public static CustomerProductDBModel getCustomerProductInfo(int customerId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

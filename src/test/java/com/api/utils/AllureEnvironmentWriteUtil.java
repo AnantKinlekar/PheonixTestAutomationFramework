@@ -10,8 +10,8 @@ import java.util.Properties;
 
 public class AllureEnvironmentWriteUtil {
     private static final Logger LOGGER = LogManager.getLogger(AllureEnvironmentWriteUtil.class);
-    public static void createEnvironmentPropertiesFile(){
 
+    public static void createEnvironmentPropertiesFile(){
         //create environment.properties file
         String folderPath = "target/allure-results";
         File file = new File(folderPath);

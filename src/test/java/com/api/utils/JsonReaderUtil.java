@@ -1,6 +1,7 @@
 package com.api.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class JsonReaderUtil {
     private static final Logger LOGGER = LogManager.getLogger(JsonReaderUtil.class);
 
+    @Step("Loading Data from JSON")
     public static <T> Iterator<T> loadJson(String fileName, Class<T[]> className) {
 
         LOGGER.info("Reading the JSON from the file {}", fileName);
