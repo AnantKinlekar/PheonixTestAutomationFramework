@@ -4,12 +4,15 @@ import static com.api.utils.SpecUtil.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import com.api.services.AuthService;
 import com.dataproviders.api.bean.UserBean;
+import io.qameta.allure.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.*;
 
 @Listeners(com.listeners.APITestListener.class)
+@Epic("User Management")
+@Feature("Authentication")
 public class LoginAPITest {
     private UserBean userCredentials;
     private AuthService authService;
@@ -20,6 +23,9 @@ public class LoginAPITest {
         authService = new AuthService();
     }
 
+    @Story("Valid user should be able to login into the system")
+    @Description("Verify if the FD user is able to login via API")
+    @Severity(SeverityLevel.BLOCKER)
     @Test(description = "Verifying if Login API is working for user: Front Desk", groups = {"api", "regression", "smoke"})
     public void loginAPITest() {
         authService.login(userCredentials)
