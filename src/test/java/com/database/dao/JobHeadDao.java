@@ -2,6 +2,7 @@ package com.database.dao;
 
 import com.database.DataBaseManager;
 import com.database.model.JobHeadModel;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +23,7 @@ public class JobHeadDao {
 
     }
 
+    @Step("Retrieving the Job Head Information Data from DB for a specific customer Id")
     public static JobHeadModel getJobHeadInfo(int customerId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

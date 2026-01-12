@@ -5,6 +5,7 @@ import com.api.utils.EnvUtil;
 import com.api.utils.VaultDBConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +34,7 @@ public class DataBaseManager {
 
     }
 
+    @Step("Initializing the DataBase Pool")
     private static void initializePool() {
 
         if (hikariDataSource == null) {
@@ -58,6 +60,7 @@ public class DataBaseManager {
         }
     }
 
+    @Step("Getting the DataBase Connection")
     public static Connection getConnection() throws SQLException {
         Connection connection = null;
 
@@ -72,6 +75,7 @@ public class DataBaseManager {
         return connection;
     }
 
+    @Step("Loading Data Base Secrets")
     public static String loadSecret(String key) {
         String value = null;
 

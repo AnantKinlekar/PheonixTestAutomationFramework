@@ -40,7 +40,7 @@ public class UserBean {
     public String toString() {
         return "UserPOJO{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + "*******" + '\'' +
                 '}';
     }
 }

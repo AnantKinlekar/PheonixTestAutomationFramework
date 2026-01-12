@@ -1,6 +1,7 @@
 package com.database.dao;
 import com.database.DataBaseManager;
 import com.database.model.CustomerDBModel;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,7 @@ public class CustomerDao {
             select * from tr_customer where id = ?
             """;
 
+    @Step("Retrieving the Customer Data from DB for a specific customer Id")
     public static CustomerDBModel getCustomerInfo(int customerId) {
         Connection conn;
         PreparedStatement preparedStatement;

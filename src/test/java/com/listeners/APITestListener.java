@@ -1,5 +1,6 @@
 package com.listeners;
 
+import com.api.utils.AllureEnvironmentWriteUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
@@ -41,6 +42,7 @@ public class APITestListener implements ITestListener {
 
     public void onStart(ITestContext context) {
         LOGGER.info("=================== STARTING THE PHEONIX FRAMEWORK EXECUTION ===================");
+        AllureEnvironmentWriteUtil.createEnvironmentPropertiesFile();
     }
 
     public void onFinish(ITestContext context) {

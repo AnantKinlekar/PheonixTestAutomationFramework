@@ -2,6 +2,7 @@ package com.database.dao;
 
 import com.database.DataBaseManager;
 import com.database.model.MapJobProblemModel;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,7 @@ public class MapJobProblemDao {
 
     }
 
+    @Step("Retrieving the Problems Details Information Data from DB for a specific JobHead Id")
     public static MapJobProblemModel getProblemDetails(int tr_job_head_id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

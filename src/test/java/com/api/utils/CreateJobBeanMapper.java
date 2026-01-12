@@ -2,6 +2,7 @@ package com.api.utils;
 
 import com.api.request.model.*;
 import com.dataproviders.api.bean.CreateJobBean;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,7 @@ public class CreateJobBeanMapper {
 
     }
 
+    @Step("Converting the CreateJobBean to the CreateJobPayload for CreateJobAPI Test")
     public static CreateJobPayload mapper(CreateJobBean bean) {
         LOGGER.info("Converting the CreateJobBean: {} to CreateJobPayload", bean);
         int mst_service_location_id = Integer.parseInt(bean.getMst_service_location_id());

@@ -11,6 +11,7 @@ import com.api.request.model.*;
 import static com.api.utils.DateTimeUtil.*;
 
 import com.api.services.JobService;
+import io.qameta.allure.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Listeners(com.listeners.APITestListener.class)
+@Epic("User Management")
+@Feature("Job Creation")
 public class CreateJobAPITest {
     private CreateJobPayload createJobPayload;
     private Customer customer;
@@ -50,7 +53,9 @@ public class CreateJobAPITest {
                 problemsList);
     }
 
-
+    @Story("FD Should be able to create a job")
+    @Description("Verify if FD Should be able to create a job and inwarranty job is created")
+    @Severity(SeverityLevel.BLOCKER)
     @Test(description = "Verify if Create Job Api is creating inwarranty job", groups = {"api", "regression", "smoke"})
     public void createJobAPITTest() {
         jobService.createJob(Role.FD, createJobPayload)
