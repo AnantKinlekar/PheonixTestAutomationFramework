@@ -5,6 +5,7 @@ import static com.api.utils.AuthTokenProvider.*;
 import com.api.constant.Role;
 import com.api.filters.SensitiveDataFilter;
 import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -24,6 +25,7 @@ public class SpecUtil {
                 .and()
                 .setAccept(ContentType.JSON)
                 .addFilter(new SensitiveDataFilter())
+                .addFilter(new AllureRestAssured())
                 .build();
 
         return request;
@@ -42,6 +44,7 @@ public class SpecUtil {
                 .and()
                 .setBody(payload)
                 .addFilter(new SensitiveDataFilter())
+                .addFilter(new AllureRestAssured())
                 .build();
 
         return request;
@@ -59,6 +62,7 @@ public class SpecUtil {
                 .and()
                 .addHeader("Authorization", getToken(role))
                 .addFilter(new SensitiveDataFilter())
+                .addFilter(new AllureRestAssured())
                 .build();
 
         return request;
@@ -76,6 +80,7 @@ public class SpecUtil {
                 .addHeader("Authorization", getToken(role))
                 .setBody(payload)
                 .addFilter(new SensitiveDataFilter())
+                .addFilter(new AllureRestAssured())
                 .build();
 
         return request;
