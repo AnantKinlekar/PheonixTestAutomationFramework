@@ -26,7 +26,7 @@ public class LoginAPITest {
     @Story("Valid user should be able to login into the system")
     @Description("Verify if the FD user is able to login via API")
     @Severity(SeverityLevel.BLOCKER)
-    @Test(description = "Verifying if Login API is working for user: Front Desk", groups = {"api", "regression", "smoke"})
+    @Test(description = "Verifying if Login API is working for user: Front Desk", groups = {"api", "regression", "smoke"}, retryAnalyzer = com.api.retry.RetryAnalyzer.class)
     public void loginAPITest() {
         authService.login(userCredentials)
                 .then()
